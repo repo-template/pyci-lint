@@ -29,13 +29,19 @@ jobs:
           pip install -r requirements.txt
       - name: Lint with flake8
         run: |
+          flake8 --version
           flake8 .
       - name: Lint with mypy
         run: |
-          mypy .
+          if [ -n "$(find . -type f -name '*.py')" ]; then
+            mypy --version
+            mypy .
+          fi
       - name: Formatter check with black
         run: |
+          black --version
           black --check .
       - name: Formatter check with isort
         run: |
+          isort -V
           isort --check-only .
