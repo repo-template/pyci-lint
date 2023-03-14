@@ -1,5 +1,2 @@
-import string
-import itertools
-
-string
-itertools
+def add(a, b):
+    return a + b
