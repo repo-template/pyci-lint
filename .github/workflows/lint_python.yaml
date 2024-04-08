@@ -1,17 +1,25 @@
-name: lint python
+name: linter
 
 on:
   pull_request:
     paths:
-      - "*"
+      - "**.py"
+      - pyproject.toml
+      - requirements-dev.txt
+      - requirements.txt
+      - setup.cfg
   push:
     branches:
       - develop
     paths:
-      - "*"
+      - "**.py"
+      - pyproject.toml
+      - requirements-dev.txt
+      - requirements.txt
+      - setup.cfg
 
 jobs:
-  build:
+  python-lint:
     runs-on: ubuntu-latest
     strategy:
       matrix:
