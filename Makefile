@@ -11,5 +11,5 @@ lint:
 
 .PHONY: fmt
 fmt:
-	ruff check --fix
 	ruff format
+	ruff check --fix
