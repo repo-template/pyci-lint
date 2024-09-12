@@ -6,10 +6,12 @@ init:
 
 .PHONY: lint
 lint:
+	ruff --version
 	ruff check
 	mypy .
 
 .PHONY: fmt
 fmt:
+	ruff --version
 	ruff format
 	ruff check --fix
