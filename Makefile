@@ -6,7 +6,10 @@ init:
 
 .PHONY: lint
 lint:
-	black .
-	flake8 .
-	isort .
+	ruff check
 	mypy .
+
+.PHONY: fmt
+fmt:
+	ruff check --fix
+	ruff format
