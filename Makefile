@@ -8,6 +8,7 @@ init:
 lint:
 	ruff --version
 	ruff check
+	ruff format --check
 	mypy .
 
 .PHONY: fmt
