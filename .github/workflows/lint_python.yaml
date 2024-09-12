@@ -1,21 +1,29 @@
-name: lint python
+name: linter
 
 on:
   pull_request:
     paths:
-      - "*"
+      - "**.py"
+      - pyproject.toml
+      - requirements-dev.txt
+      - requirements.txt
+      - setup.cfg
   push:
     branches:
       - develop
     paths:
-      - "*"
+      - "**.py"
+      - pyproject.toml
+      - requirements-dev.txt
+      - requirements.txt
+      - setup.cfg
 
 jobs:
-  build:
+  python-lint:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11"]
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
 
     steps:
       - uses: actions/checkout@v3
@@ -26,6 +34,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
           pip install -r requirements.txt
       - name: Lint with flake8
         run: |
