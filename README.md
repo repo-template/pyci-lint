@@ -1,9 +1,10 @@
 # pyci-lint
 
-Python GitHub Actions
+Python lint check with GitHub Actions
 
-## Create requirements.txt
+## GitHub Actions
 
-```bash
-$ pip freeze | grep -e black -e isort -e flake8 -e mypy > requirements.txt
-```
+The following linter results are detected by GitHub Actions.
+
+- ruff
+- mypy
