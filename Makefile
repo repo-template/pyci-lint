@@ -4,6 +4,10 @@ init:
 	pip install -r requirements.txt
 	pip install -r requirements-dev.txt
 
+.PHONY: run
+run:
+	python main.py
+
 .PHONY: lint
 lint:
 	ruff --version
