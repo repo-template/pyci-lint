@@ -2,70 +2,70 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## プロジェクト概要
+## Project Overview
 
-GitHub ActionsでPythonのlintチェック（ruff, mypy）を実行するためのテンプレートリポジトリ。Python 3.10〜3.13をサポート。
+A template repository for running Python lint checks (ruff, mypy) with GitHub Actions. Supports Python 3.10-3.13.
 
-## 仮想環境
+## Virtual Environment
 
-特に指定がなければvenvを使用する：
+Use venv unless otherwise specified:
 
 ```bash
 python -m venv venv
 source venv/bin/activate
 ```
 
-## コマンド
+## Commands
 
 ```bash
-make init    # 依存関係のインストール
+make init    # Install dependencies
 make lint    # ruff check + ruff format --check + mypy
-make fmt     # ruff format + ruff check --fix（自動修正）
-make run     # main.py実行
+make fmt     # ruff format + ruff check --fix (auto-fix)
+make run     # Run main.py
 ```
 
-## Lint設定
+## Lint Settings
 
-- **ruff**: `pyproject.toml`で設定。行長79文字、E/F/Iルールを適用
-- **mypy**: 厳格な型チェック（`disallow_untyped_defs`, `disallow_untyped_calls`等）
+- **ruff**: Configured in `pyproject.toml`. Line length 79, E/F/I rules enabled
+- **mypy**: Strict type checking (`disallow_untyped_defs`, `disallow_untyped_calls`, etc.)
 
-## 開発ルール
+## Development Rules
 
-### 型安全性
+### Type Safety
 
-- pydanticを使用してデータの型安全性を確保すること
-- 全ての関数・メソッドに型アノテーションを付与すること（mypyの`disallow_untyped_defs`で強制）
+- Use pydantic to ensure data type safety
+- All functions/methods must have type annotations (enforced by mypy's `disallow_untyped_defs`)
 
-### インポート
+### Import
 
-- PEP 8に従う
+- Follow PEP 8
 
-### ファイル構成
+### File Structure
 
-- 1クラス1ファイルで管理すること
-- クラス名とファイル名を一致させること（例: `MyClass` → `my_class.py`）
+- One class per file
+- Match class name to file name (e.g., `MyClass` → `my_class.py`)
 
-### オブジェクト指向設計
+### Object-Oriented Design
 
-- 単一責任の原則に従い、クラスを適切に分割すること
-- 継承よりコンポジションを優先すること
+- Follow the single responsibility principle
+- Prefer composition over inheritance
 
-### 定数管理
+### Constants
 
-- マジックナンバー/マジックストリングは使用禁止
-- 定数は`constants/`に定義して参照する
+- No magic numbers/strings
+- Define constants in `constants/` and reference them
 
-### Enum定義
+### Enum Definition
 
-- `auto()`は使用しない
-- タプルで`(code, display_name)`の形式で定義し、プロパティでアクセスできるようにする
+- Do not use `auto()`
+- Define as tuple `(code, display_name)` format with property accessors
 
 ```python
 from enum import Enum
 
 class Status(Enum):
-    ACTIVE = (1, "有効")
-    INACTIVE = (0, "無効")
+    ACTIVE = (1, "Active")
+    INACTIVE = (0, "Inactive")
 
     def __init__(self, code: int, display_name: str) -> None:
         self._code = code
@@ -80,35 +80,35 @@ class Status(Enum):
         return self._display_name
 ```
 
-### ディレクトリ構成
+### Directory Structure
 
-`app/`ディレクトリをプロジェクトに応じて適切な名前に変更し、以下の構成で管理する：
+Rename the `app/` directory to match your project name, and organize with the following structure:
 
 ```text
 <project_name>/
-├── constants/    # Enum等の定数
-├── models/       # pydanticモデル
-├── services/     # ビジネスロジック
-└── exceptions/   # カスタム例外
-tests/            # テストコード
+├── constants/    # Enums and constants
+├── models/       # pydantic models
+├── services/     # Business logic
+└── exceptions/   # Custom exceptions
+tests/            # Test code
 ```
 
 ### Docstring
 
-- 公開API（publicな関数/クラス）には必ずDocstringを書く
-- Google styleで統一する
+- Write docstrings for all public APIs (public functions/classes)
+- Use Google style
 
-### テスト
+### Testing
 
-- pytestを使用する
-- テストファイルは`tests/`に配置し、`test_*.py`の命名規則に従う
+- Use pytest
+- Place test files in `tests/` with `test_*.py` naming convention
 
-### ログ出力
+### Logging
 
-- `print()`は使用禁止
-- `logging`モジュールを使用すること
+- Do not use `print()`
+- Use the `logging` module
 
-### コード変更時の必須作業
+### Required After Code Changes
 
-- コード変更後は必ず `make lint` を実行してlintエラーがないことを確認すること
-- lintエラーがある場合は修正してからコミットすること
+- Always run `make lint` after code changes to ensure no lint errors
+- Fix any lint errors before committing
